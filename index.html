@@ -1,258 +1,298 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POLY DELIVERY</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POLY DELIVERY</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
 
-        #menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
+    header input {
+      margin: 5px;
+    }
 
-        .plat {
-            width: 300px;
-            margin: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+    #menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
 
-        .plat img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
+    .plat {
+      width: 300px;
+      margin: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
 
-        .plat .infos {
-            display: none; /* Caché par défaut */
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+    .plat img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
 
-        .boutonAjouter,
-        .boutonRetirer {
-            background-color: green;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .plat .infos {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
 
-        .boutonRetirer {
-            background-color: red;
-        }
+    .boutonAjouter,
+    .boutonRetirer {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
 
-        #validerCommande {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+    .boutonRetirer {
+      background-color: red;
+    }
 
-        input {
-            padding: 10px;
-            margin: 5px;
-            width: 200px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
+    #validerCommande {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        input[type="tel"] {
-            -moz-appearance: textfield;
-        }
+    input, textarea {
+      padding: 10px;
+      margin: 5px;
+      width: 200px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
 
-        input[type="tel"]::-webkit-outer-spin-button,
-        input[type="tel"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+    textarea {
+      width: 90%;
+      height: 80px;
+      resize: vertical;
+    }
 
-        footer {
-            text-align: center;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
+    input[type="tel"] {
+      -moz-appearance: textfield;
+    }
 
-        footer p {
-            margin: 0;
-        }
+    input[type="tel"]::-webkit-outer-spin-button,
+    input[type="tel"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-        footer .mention {
-            font-style: italic;
-        }
-    </style>
+    footer {
+      text-align: center;
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    footer .mention {
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Bienvenue chez POLY DELIVERY</h1>
-        <p>Entrez vos informations pour commander :</p>
-        <input type="text" id="clientName" placeholder="Votre nom">
-        <input type="tel" id="clientPhone" placeholder="Votre numéro WhatsApp" pattern="^\d{10}$" title="Veuillez entrer un numéro de 10 chiffres" required>
-    </header>
+  <header>
+    <h1>Bienvenue chez POLY DELIVERY</h1>
+    <p>Entrez vos informations pour commander :</p>
+    <input type="text" id="clientName" placeholder="Votre nom">
+    <input type="tel" id="clientPhone" placeholder="Votre numéro WhatsApp" pattern="^\d{10}$" inputmode="numeric" title="Veuillez entrer un numéro de 10 chiffres" required>
+    <!-- Zone de texte pour la localisation -->
+    <input type="text" id="clientLocation" placeholder="Votre emplacement">
+  </header>
 
-    <section id="menu">
-        <!-- Le menu sera généré ici par JavaScript -->
-    </section>
+  <section id="menu">
+    <!-- Le menu sera généré ici par JavaScript -->
+  </section>
 
-    <section id="panier" style="display:none;">
-        <h2>Votre Panier</h2>
-        <ul id="listePanier"></ul>
-        <p>Total: <span id="totalPanier">0</span> F CFA</p>
-        <button id="validerCommande">Valider la commande</button>
-    </section>
+  <section id="panier" style="display:none;">
+    <h2>Votre Panier</h2>
+    <ul id="listePanier"></ul>
+    <p>Total: <span id="totalPanier">0</span> F CFA</p>
+    <!-- Zone de texte pour que le client donne ses envies -->
+    <textarea id="clientComments" placeholder="Vos envies (ex: plus de mayonnaise, moins de piments, etc.)"></textarea>
+    <button id="validerCommande">Valider la commande</button>
+  </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menu = document.getElementById('menu');
-            const listePanier = document.getElementById('listePanier');
-            const totalPanier = document.getElementById('totalPanier');
-            const validerCommande = document.getElementById('validerCommande');
-            const clientNameInput = document.getElementById('clientName');
-            const clientPhoneInput = document.getElementById('clientPhone');
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menu = document.getElementById('menu');
+      const listePanier = document.getElementById('listePanier');
+      const totalPanier = document.getElementById('totalPanier');
+      const validerCommande = document.getElementById('validerCommande');
+      const clientNameInput = document.getElementById('clientName');
+      const clientPhoneInput = document.getElementById('clientPhone');
+      const clientLocationInput = document.getElementById('clientLocation');
+      const clientCommentsInput = document.getElementById('clientComments');
 
-            let panier = [];
-            let prixTotal = 0;
+      let panier = [];
+      let prixTotal = 0;
 
-            // Exemple de données de menu (à remplacer avec vos propres plats)
-            const plats = [
-                { id: 1, nom: 'Ndolé', prix: 1500, image: 'ndole.jpg', ingredients: 'Viande, arachides, légumes' },
-                { id: 2, nom: 'Poisson Braisé', prix: 2000, image: 'poisson.jpg', ingredients: 'Poisson, épices' },
-                { id: 3, nom: 'Garba', prix: 700, image: 'garba.jpg', ingredients: 'Attiéké, épices, Poisson Thon' },
-                { id: 4, nom: 'Alloco + oeuf blanc', prix: 500, image: 'alloco.jpg', ingredients: 'Banane, épices, oeuf' },
-                { id: 5, nom: 'Frites + Poulet', prix: 1000, image: 'frites.jpg', ingredients: 'Poulet, épices, Pomme de terre' },
-                { id: 6, nom: 'Tchep + poulet', prix: 1500, image: 'tchep.jpg', ingredients: 'poulet, épices, riz local' },
-                // ... ajoutez d'autres plats
-            ];
+      // Exemple de données de menu (à remplacer avec vos propres plats)
+      const plats = [
+        { id: 1, nom: 'Ndolé', prix: 1500, image: 'ndole.jpg', ingredients: 'Viande, arachides, légumes' },
+        { id: 2, nom: 'Poisson Braisé', prix: 2000, image: 'poisson.jpg', ingredients: 'Poisson, épices' },
+        { id: 3, nom: 'Garba', prix: 700, image: 'garba.jpg', ingredients: 'Attiéké, épices, Poisson Thon' },
+        { id: 4, nom: 'Alloco + oeuf blanc', prix: 500, image: 'alloco.jpg', ingredients: 'Banane, épices, oeuf' },
+        { id: 5, nom: 'Frites + Poulet', prix: 1000, image: 'frites.jpg', ingredients: 'Poulet, épices, Pomme de terre' },
+        { id: 6, nom: 'Tchep + poulet', prix: 1500, image: 'tchep.jpg', ingredients: 'poulet, épices, riz local' },
+        // ... ajoutez d'autres plats
+      ];
 
-            // Fonction pour afficher le menu
-            function afficherMenu() {
-                menu.innerHTML = '';
-                plats.forEach(plat => {
-                    const platDiv = document.createElement('div');
-                    platDiv.classList.add('plat');
-                    platDiv.innerHTML = `
-                        <img src="${plat.image}" alt="${plat.nom}">
-                        <h3>${plat.nom}</h3>
-                        <button class="boutonInfos" data-id="${plat.id}">Infos</button>
-                        <div class="infos" id="infos-${plat.id}">
-                            <p>Prix: ${plat.prix} F CFA</p>
-                            <p>Ingrédients: ${plat.ingredients}</p>
-                        </div>
-                        <button class="boutonAjouter" data-id="${plat.id}">+ Ajouter</button>
-                        <button class="boutonRetirer" data-id="${plat.id}">- Retirer</button>
-                    `;
-                    menu.appendChild(platDiv);
-                });
-
-                // Ajouter les événements aux boutons "Infos", "Ajouter", et "Retirer"
-                document.querySelectorAll('.boutonInfos').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = button.getAttribute('data-id');
-                        const infosDiv = document.getElementById(`infos-${id}`);
-                        infosDiv.style.display = infosDiv.style.display === 'block' ? 'none' : 'block';
-                    });
-                });
-
-                document.querySelectorAll('.boutonAjouter').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = button.getAttribute('data-id');
-                        const platAjoute = plats.find(plat => plat.id == id);
-                        panier.push(platAjoute);
-                        mettreAJourPanier();
-                        document.getElementById('panier').style.display = 'block';
-                    });
-                });
-
-                document.querySelectorAll('.boutonRetirer').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const id = button.getAttribute('data-id');
-                        const index = panier.findIndex(plat => plat.id == id);
-                        if (index > -1) {
-                            panier.splice(index, 1);
-                            mettreAJourPanier();
-                        }
-                    });
-                });
-            }
-
-            // Fonction pour mettre à jour le panier
-            function mettreAJourPanier() {
-                listePanier.innerHTML = '';
-                prixTotal = 0;
-                panier.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = `${item.nom} - ${item.prix} F CFA`;
-                    listePanier.appendChild(li);
-                    prixTotal += item.prix;
-                });
-                totalPanier.textContent = prixTotal;
-            }
-
-            // Fonction pour valider la commande
-            validerCommande.addEventListener('click', () => {
-                const clientName = clientNameInput.value.trim();
-                const clientPhone = clientPhoneInput.value.trim();
-                if (clientName === '' || clientPhone === '') {
-                    alert('Veuillez entrer votre nom et votre numéro WhatsApp.');
-                    return;
-                }
-
-                // Créer le message à envoyer
-                let message = `La commande de ${clientName}, ${clientPhone} est : %0A`;
-                panier.forEach(item => {
-                    message += `- ${item.nom} (${item.prix} F CFA)%0A`;
-                });
-                message += `Total: ${prixTotal} F CFA`;
-
-                // Encodage de l'URL pour WhatsApp
-                let whatsappMessage = encodeURIComponent(message);
-                let whatsappUrl = `https://wa.me/message/BMQI74OVVTCHH1?text=${whatsappMessage}`;
-
-                // Ouvrir l'URL dans une nouvelle fenêtre pour lancer WhatsApp
-                window.open(whatsappUrl, '_blank');
-                
-                // Réinitialisation du panier et des champs
-                panier = [];
-                mettreAJourPanier();
-                clientNameInput.value = '';
-                clientPhoneInput.value = '';
-                document.getElementById('panier').style.display = 'none';
-            });
-
-            // Afficher le menu au chargement de la page
-            afficherMenu();
+      // Fonction pour afficher le menu
+      function afficherMenu() {
+        menu.innerHTML = '';
+        plats.forEach(plat => {
+          const platDiv = document.createElement('div');
+          platDiv.classList.add('plat');
+          platDiv.innerHTML = `
+            <img src="${plat.image}" alt="${plat.nom}">
+            <h3>${plat.nom}</h3>
+            <button class="boutonInfos" data-id="${plat.id}">Infos</button>
+            <div class="infos" id="infos-${plat.id}">
+              <p>Prix: ${plat.prix} F CFA</p>
+              <p>Ingrédients: ${plat.ingredients}</p>
+            </div>
+            <button class="boutonAjouter" data-id="${plat.id}">+ Ajouter</button>
+            <button class="boutonRetirer" data-id="${plat.id}">- Retirer</button>
+          `;
+          menu.appendChild(platDiv);
         });
-    </script>
 
+        // Évènements pour les boutons "Infos", "Ajouter" et "Retirer"
+        document.querySelectorAll('.boutonInfos').forEach(button => {
+          button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            const infosDiv = document.getElementById(`infos-${id}`);
+            infosDiv.style.display = infosDiv.style.display === 'block' ? 'none' : 'block';
+          });
+        });
+
+        document.querySelectorAll('.boutonAjouter').forEach(button => {
+          button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            const platAjoute = plats.find(plat => plat.id == id);
+            panier.push(platAjoute);
+            mettreAJourPanier();
+            document.getElementById('panier').style.display = 'block';
+          });
+        });
+
+        document.querySelectorAll('.boutonRetirer').forEach(button => {
+          button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            const index = panier.findIndex(plat => plat.id == id);
+            if (index > -1) {
+              panier.splice(index, 1);
+              mettreAJourPanier();
+            }
+          });
+        });
+      }
+
+      // Fonction pour mettre à jour le panier
+      function mettreAJourPanier() {
+        listePanier.innerHTML = '';
+        prixTotal = 0;
+        panier.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.nom} - ${item.prix} F CFA`;
+          listePanier.appendChild(li);
+          prixTotal += item.prix;
+        });
+        totalPanier.textContent = prixTotal;
+      }
+
+      // Fonction pour valider la commande
+      validerCommande.addEventListener('click', () => {
+        const clientName = clientNameInput.value.trim();
+        const clientPhone = clientPhoneInput.value.trim();
+        const clientLocation = clientLocationInput.value.trim();
+        const clientComments = clientCommentsInput.value.trim();
+
+        // Vérification que le nom et le numéro sont renseignés et que le numéro fait 10 chiffres
+        if (clientName === '' || clientPhone === '' || !/^\d{10}$/.test(clientPhone)) {
+          alert('Veuillez entrer votre nom et un numéro WhatsApp valide de 10 chiffres.');
+          return;
+        }
+
+        // Création du message au format demandé
+        let message = `CLIENT : ${clientName}%0A`;
+        message += `NUMERO WHATSAPP : ${clientPhone}%0A`;
+        message += `EMPLACEMENT : ${clientLocation !== '' ? clientLocation : 'Non renseigné'}%0A`;
+        message += `COMMANDE : %0A`;
+        panier.forEach(item => {
+          message += `- ${item.nom} (${item.prix} F CFA)%0A`;
+        });
+        message += `TOTAL : ${prixTotal} F CFA%0A`;
+        message += `VOLONTES : ${clientComments !== '' ? clientComments : 'Aucune'}`;
+
+        // Décodage du message pour le copier dans le presse-papier
+        const decodedMessage = decodeURIComponent(message.replace(/%0A/g, '\n'));
+
+        // Copie du message dans le presse-papier
+        navigator.clipboard.writeText(decodedMessage)
+          .then(() => {
+            console.log('Le message a été copié dans le presse-papier.');
+          })
+          .catch(err => {
+            console.error('Erreur lors de la copie : ', err);
+          });
+
+        // Encodage du message pour l'URL WhatsApp
+        let whatsappMessage = encodeURIComponent(decodedMessage);
+        let whatsappUrl = `https://wa.me/message/BMQI74OVVTCHH1?text=${whatsappMessage}`;
+
+        // Ouvrir l'URL dans une nouvelle fenêtre pour lancer WhatsApp
+        window.open(whatsappUrl, '_blank');
+
+        // Réinitialisation du panier et des champs
+        panier = [];
+        mettreAJourPanier();
+        clientNameInput.value = '';
+        clientPhoneInput.value = '';
+        clientLocationInput.value = '';
+        clientCommentsInput.value = '';
+        document.getElementById('panier').style.display = 'none';
+      });
+
+      // Afficher le menu au chargement de la page
+      afficherMenu();
+    });
+  </script>
 </body>
 </html>
