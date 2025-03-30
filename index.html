@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLY DELIVERY</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .plat {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .plat img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .plat .infos {
+            display: none; /* Caché par défaut */
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .boutonAjouter,
+        .boutonRetirer {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .boutonRetirer {
+            background-color: red;
+        }
+
+        #validerCommande {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        input[type="tel"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="tel"]::-webkit-outer-spin-button,
+        input[type="tel"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer .mention {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue chez POLY DELIVERY</h1>
+        <p>Entrez vos informations pour commander :</p>
+        <input type="text" id="clientName" placeholder="Votre nom">
+        <input type="tel" id="clientPhone" placeholder="Votre numéro WhatsApp" pattern="^\d{10}$" title="Veuillez entrer un numéro de 10 chiffres" required>
+    </header>
+
+    <section id="menu">
+        <!-- Le menu sera généré ici par JavaScript -->
+    </section>
+
+    <section id="panier" style="display:none;">
+        <h2>Votre Panier</h2>
+        <ul id="listePanier"></ul>
+        <p>Total: <span id="totalPanier">0</span> F CFA</p>
+        <button id="validerCommande">Valider la commande</button>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menu = document.getElementById('menu');
+            const listePanier = document.getElementById('listePanier');
+            const totalPanier = document.getElementById('totalPanier');
+            const validerCommande = document.getElementById('validerCommande');
+            const clientNameInput = document.getElementById('clientName');
+            const clientPhoneInput = document.getElementById('clientPhone');
+
+            let panier = [];
+            let prixTotal = 0;
+
+            // Exemple de données de menu (à remplacer avec vos propres plats)
+            const plats = [
+                { id: 1, nom: 'Ndolé', prix: 1500, image: 'ndole.jpg', ingredients: 'Viande, arachides, légumes' },
+                { id: 2, nom: 'Poisson Braisé', prix: 2000, image: 'poisson.jpg', ingredients: 'Poisson, épices' },
+                { id: 3, nom: 'Garba', prix: 700, image: 'garba.jpg', ingredients: 'Attiéké, épices, Poisson Thon' },
+                { id: 4, nom: 'Alloco + oeuf blanc', prix: 500, image: 'alloco.jpg', ingredients: 'Banane, épices, oeuf' },
+                { id: 5, nom: 'Frites + Poulet', prix: 1000, image: 'frites.jpg', ingredients: 'Poulet, épices, Pomme de terre' },
+                { id: 6, nom: 'Tchep + poulet', prix: 1500, image: 'tchep.jpg', ingredients: 'poulet, épices, riz local' },
+                // ... ajoutez d'autres plats
+            ];
+
+            // Fonction pour afficher le menu
+            function afficherMenu() {
+                menu.innerHTML = '';
+                plats.forEach(plat => {
+                    const platDiv = document.createElement('div');
+                    platDiv.classList.add('plat');
+                    platDiv.innerHTML = `
+                        <img src="${plat.image}" alt="${plat.nom}">
+                        <h3>${plat.nom}</h3>
+                        <button class="boutonInfos" data-id="${plat.id}">Infos</button>
+                        <div class="infos" id="infos-${plat.id}">
+                            <p>Prix: ${plat.prix} F CFA</p>
+                            <p>Ingrédients: ${plat.ingredients}</p>
+                        </div>
+                        <button class="boutonAjouter" data-id="${plat.id}">+ Ajouter</button>
+                        <button class="boutonRetirer" data-id="${plat.id}">- Retirer</button>
+                    `;
+                    menu.appendChild(platDiv);
+                });
+
+                // Ajouter les événements aux boutons "Infos", "Ajouter", et "Retirer"
+                document.querySelectorAll('.boutonInfos').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const id = button.getAttribute('data-id');
+                        const infosDiv = document.getElementById(`infos-${id}`);
+                        infosDiv.style.display = infosDiv.style.display === 'block' ? 'none' : 'block';
+                    });
+                });
+
+                document.querySelectorAll('.boutonAjouter').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const id = button.getAttribute('data-id');
+                        const platAjoute = plats.find(plat => plat.id == id);
+                        panier.push(platAjoute);
+                        mettreAJourPanier();
+                        document.getElementById('panier').style.display = 'block';
+                    });
+                });
+
+                document.querySelectorAll('.boutonRetirer').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const id = button.getAttribute('data-id');
+                        const index = panier.findIndex(plat => plat.id == id);
+                        if (index > -1) {
+                            panier.splice(index, 1);
+                            mettreAJourPanier();
+                        }
+                    });
+                });
+            }
+
+            // Fonction pour mettre à jour le panier
+            function mettreAJourPanier() {
+                listePanier.innerHTML = '';
+                prixTotal = 0;
+                panier.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.nom} - ${item.prix} F CFA`;
+                    listePanier.appendChild(li);
+                    prixTotal += item.prix;
+                });
+                totalPanier.textContent = prixTotal;
+            }
+
+            // Fonction pour valider la commande
+            validerCommande.addEventListener('click', () => {
+                const clientName = clientNameInput.value.trim();
+                const clientPhone = clientPhoneInput.value.trim();
+                if (clientName === '' || clientPhone === '') {
+                    alert('Veuillez entrer votre nom et votre numéro WhatsApp.');
+                    return;
+                }
+
+                let message = `La commande de ${clientName}, ${clientPhone} est : %0A`;
+                panier.forEach(item => {
+                    message += `- ${item.nom} (${item.prix} F CFA)%0A`;
+                });
+                message += `Total: ${prixTotal} F CFA`;
+
+                let whatsappUrl = `https://wa.me/message/BMQI74OVVTCHH1?text=${message}`;
+                window.open(whatsappUrl, '_blank');
+                
+                // Réinitialiser le panier et les champs
+                panier = [];
+                mettreAJourPanier();
+                clientNameInput.value = '';
+                clientPhoneInput.value = '';
+                document.getElementById('panier').style.display = 'none';
+            });
+
+            // Afficher le menu au chargement de la page
+            afficherMenu();
+        });
+    </script>
+
+</body>
+</html>
