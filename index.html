@@ -10,35 +10,65 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        /* Arrière-plan avec dégradé dynamique */
         body {
-            background-color: #f4f4f4;
+            background: linear-gradient(to top right, #4e73df, #1e3c72); /* Dégradé de départ */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            animation: changeBackground 2s ease-in-out forwards; /* Animation pour changer le dégradé */
         }
+
+        /* Animation de changement de dégradé */
+        @keyframes changeBackground {
+            0% {
+                background: linear-gradient(to top right, #4e73df, #1e3c72); /* Bleu clair à bleu foncé au départ */
+            }
+            100% {
+                background: linear-gradient(to top right, #1e3c72, #4e73df); /* Bleu foncé à bleu clair à la fin */
+            }
+        }
+
         #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            border-radius: 15px; /* Coins arrondis */
         }
+
         #loader img {
             width: 150px;
             height: auto;
             position: absolute;
             animation: moveAcross 2s linear forwards;
         }
+
         @keyframes moveAcross {
             from { transform: translateX(100vw); }
             to { transform: translateX(-100%); }
+        }
+
+        /* Animation de fond : petites vagues ou effets modernes */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/diagonal-stripes.png'); /* Texture élégante */
+            opacity: 0.1;
         }
     </style>
 </head>
