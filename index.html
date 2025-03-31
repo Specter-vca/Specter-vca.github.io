@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chargement...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #loader img {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            animation: moveAcross 2s linear forwards;
+        }
+        @keyframes moveAcross {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <img src="logo.png" alt="Logo Poly Delivery">
+    </div>
+    
+    <script>
+        window.addEventListener("load", function() {
+            // Écoute la fin de l'animation pour rediriger
+            const loaderImage = document.querySelector('#loader img');
+            loaderImage.addEventListener('animationend', function() {
+                window.location.href = "accueil.html"; // Redirection après fin de l'animation
+            });
+        });
+    </script>
+</body>
+</html>
